@@ -7,22 +7,14 @@ class CreditManager: ObservableObject {
 
     @Published var coffeeBalance: Int {
         didSet {
-            UserDefaults.standard.set(coffeeBalance, forKey: balanceKey)
+            KeychainHelper.save(coffeeBalance, forKey: balanceKey)
         }
     }
     @Published var products: [Product] = []
     @Published var purchaseInProgress = false
     @Published var purchaseError: String?
-    @Published var adsWatchedTowardCoffee: Int {
-        didSet {
-            UserDefaults.standard.set(adsWatchedTowardCoffee, forKey: adsWatchedKey)
-        }
-    }
-
     private let balanceKey = "com.damla.mysticqueen.coffeeBalance"
     private let welcomeKey = "com.damla.mysticqueen.welcomeBonusGiven"
-    private let adsWatchedKey = "com.damla.mysticqueen.adsWatched"
-    private let adsPerCoffee = 15
 
     private let productIds = [
         "com.damla.mysticqueen.coffee5",
@@ -34,8 +26,17 @@ class CreditManager: ObservableObject {
     private var transactionTask: Task<Void, Never>?
 
     private init() {
-        self.coffeeBalance = UserDefaults.standard.integer(forKey: balanceKey)
-        self.adsWatchedTowardCoffee = UserDefaults.standard.integer(forKey: adsWatchedKey)
+        // Migrate from UserDefaults to Keychain if needed
+        if let keychainBalance = KeychainHelper.load(forKey: balanceKey) {
+            self.coffeeBalance = keychainBalance
+        } else {
+            let legacyBalance = UserDefaults.standard.integer(forKey: balanceKey)
+            self.coffeeBalance = legacyBalance
+            if legacyBalance > 0 {
+                KeychainHelper.save(legacyBalance, forKey: balanceKey)
+                UserDefaults.standard.removeObject(forKey: balanceKey)
+            }
+        }
         listenForTransactions()
     }
 
@@ -75,26 +76,6 @@ class CreditManager: ObservableObject {
 
     func addCoffees(_ amount: Int) {
         coffeeBalance += amount
-    }
-
-    // MARK: - Rewarded Ads (15 ads = 1 coffee)
-
-    func recordAdWatched() {
-        adsWatchedTowardCoffee += 1
-        if adsWatchedTowardCoffee >= adsPerCoffee {
-            adsWatchedTowardCoffee = 0
-            coffeeBalance += 1
-        }
-    }
-
-    var adsRemainingForCoffee: Int {
-        adsPerCoffee - adsWatchedTowardCoffee
-    }
-
-    // MARK: - Referral
-
-    func applyReferralBonus() {
-        coffeeBalance += 1
     }
 
     // MARK: - Transaction Listener

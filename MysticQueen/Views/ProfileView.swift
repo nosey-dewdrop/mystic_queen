@@ -21,16 +21,9 @@ struct ProfileView: View {
 
                 ScrollView {
                     VStack(spacing: MQTheme.paddingLarge) {
-                        // Profile header
                         profileHeader
-
-                        // Coffee balance card
                         coffeeCard
-
-                        // Past readings placeholder
                         pastReadingsSection
-
-                        // Settings
                         settingsSection
                     }
                     .padding(MQTheme.paddingMedium)
@@ -40,7 +33,7 @@ struct ProfileView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Text("Profilim")
-                        .font(MQTheme.pixelTitle(12))
+                        .font(MQTheme.title())
                         .foregroundStyle(MQTheme.gold)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
@@ -63,19 +56,19 @@ struct ProfileView: View {
                 .font(.system(size: 48))
 
             Text(userName)
-                .font(MQTheme.pixelBody(16))
+                .font(MQTheme.heading(18))
                 .foregroundStyle(MQTheme.textPrimary)
 
             HStack(spacing: 4) {
                 Text(zodiac.displayName)
-                    .font(MQTheme.pixelBody(12))
+                    .font(MQTheme.caption())
                     .foregroundStyle(MQTheme.gold)
 
                 Text("•")
                     .foregroundStyle(MQTheme.textMuted)
 
                 Text(birthDate, format: .dateTime.day().month(.wide).year())
-                    .font(MQTheme.body(13))
+                    .font(MQTheme.caption())
                     .foregroundStyle(MQTheme.textSecondary)
             }
         }
@@ -89,13 +82,13 @@ struct ProfileView: View {
         VStack(spacing: 12) {
             HStack {
                 Text("☕ Kahve Bakiyen")
-                    .font(MQTheme.pixelBody(12))
+                    .font(MQTheme.caption())
                     .foregroundStyle(MQTheme.textSecondary)
 
                 Spacer()
 
                 Text("\(coffeeBalance)")
-                    .font(MQTheme.pixelTitle(18))
+                    .font(MQTheme.title(28))
                     .foregroundStyle(MQTheme.coffee)
             }
 
@@ -106,7 +99,7 @@ struct ProfileView: View {
                 // TODO: Open coffee shop
             } label: {
                 Text("Kahve Satin Al")
-                    .font(MQTheme.pixelBody(12))
+                    .font(MQTheme.button())
                     .foregroundStyle(MQTheme.backgroundDark)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 10)
@@ -122,11 +115,11 @@ struct ProfileView: View {
     private var pastReadingsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Gecmis Fallar")
-                .font(MQTheme.pixelBody(12))
+                .font(MQTheme.heading())
                 .foregroundStyle(MQTheme.textSecondary)
 
             Text("Henuz fal baktirmadiniz")
-                .font(MQTheme.body(14))
+                .font(MQTheme.body())
                 .foregroundStyle(MQTheme.textMuted)
                 .frame(maxWidth: .infinity, minHeight: 60)
         }
@@ -156,7 +149,7 @@ struct ProfileView: View {
                     .frame(width: 24)
 
                 Text(title)
-                    .font(MQTheme.body(15))
+                    .font(MQTheme.body())
                     .foregroundStyle(MQTheme.textPrimary)
 
                 Spacer()

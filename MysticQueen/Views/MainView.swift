@@ -45,7 +45,7 @@ struct MainView: View {
         HStack {
             // App logo/name
             Text("Mystic Queen")
-                .font(MQTheme.pixelTitle(10))
+                .font(MQTheme.pixelLogo(10))
                 .foregroundStyle(MQTheme.gold)
 
             Spacer()
@@ -55,7 +55,7 @@ struct MainView: View {
                 Text("☕")
                     .font(.system(size: 16))
                 Text("\(coffeeBalance)")
-                    .font(MQTheme.pixelBody(14))
+                    .font(MQTheme.button())
                     .foregroundStyle(MQTheme.coffee)
             }
             .padding(.horizontal, 10)

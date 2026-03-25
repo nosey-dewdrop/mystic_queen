@@ -11,24 +11,24 @@ struct CharacterCardView: View {
             // Character avatar
             Image(character.avatarName)
                 .resizable()
-                .interpolation(.none) // pixel art crisp rendering
+                .interpolation(.none)
                 .scaledToFit()
                 .frame(width: 180, height: 180)
                 .shadow(color: character.accentColor.opacity(0.4), radius: 20)
 
             // Character name
             Text(character.name)
-                .font(MQTheme.pixelTitle(16))
+                .font(MQTheme.title(24))
                 .foregroundStyle(character.accentColor)
 
             // Tagline
             Text(character.tagline)
-                .font(MQTheme.pixelBody(12))
+                .font(MQTheme.caption())
                 .foregroundStyle(MQTheme.textSecondary)
 
             // Greeting
             Text("\"\(character.greeting)\"")
-                .font(MQTheme.body(15))
+                .font(MQTheme.body())
                 .foregroundStyle(MQTheme.textPrimary.opacity(0.8))
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, MQTheme.paddingLarge)
@@ -42,7 +42,7 @@ struct CharacterCardView: View {
                             .font(.system(size: 20))
                             .foregroundStyle(character.accentColor)
                         Text(specialty.displayName)
-                            .font(MQTheme.pixelBody(8))
+                            .font(MQTheme.caption(11))
                             .foregroundStyle(MQTheme.textSecondary)
                     }
                 }
@@ -55,10 +55,10 @@ struct CharacterCardView: View {
                 Button {
                     showDetail = true
                 } label: {
-                    HStack {
+                    HStack(spacing: 6) {
                         Text("☕")
                         Text("Fal Baktir")
-                            .font(MQTheme.pixelBody(14))
+                            .font(MQTheme.button())
                     }
                     .foregroundStyle(MQTheme.backgroundDark)
                     .frame(maxWidth: .infinity)
@@ -70,10 +70,10 @@ struct CharacterCardView: View {
                 Button {
                     // TODO: Navigate to appointment booking
                 } label: {
-                    HStack {
+                    HStack(spacing: 6) {
                         Image(systemName: "calendar.badge.clock")
                         Text("Randevu Al")
-                            .font(MQTheme.pixelBody(14))
+                            .font(MQTheme.button())
                     }
                     .foregroundStyle(character.accentColor)
                     .frame(maxWidth: .infinity)

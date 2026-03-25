@@ -34,20 +34,30 @@ enum MQTheme {
     static let success = Color(hex: 0x6BCB77)
 
     // MARK: - Fonts
-    static func pixelTitle(_ size: CGFloat = 12) -> Font {
+    // Pixel font — ONLY for app logo/brand name
+    static func pixelLogo(_ size: CGFloat = 12) -> Font {
         .custom("PressStart2P-Regular", size: size)
     }
 
-    static func pixelBody(_ size: CGFloat = 14) -> Font {
-        .custom("Silkscreen-Regular", size: size)
+    // Clean fonts for all UI text
+    static func title(_ size: CGFloat = 22) -> Font {
+        .system(size: size, weight: .bold, design: .rounded)
     }
 
-    static func pixelBodyBold(_ size: CGFloat = 14) -> Font {
-        .custom("Silkscreen-Bold", size: size)
+    static func heading(_ size: CGFloat = 17) -> Font {
+        .system(size: size, weight: .semibold, design: .rounded)
     }
 
-    static func body(_ size: CGFloat = 16) -> Font {
-        .custom("PixelifySans-Regular", size: size)
+    static func body(_ size: CGFloat = 15) -> Font {
+        .system(size: size, weight: .regular, design: .rounded)
+    }
+
+    static func caption(_ size: CGFloat = 13) -> Font {
+        .system(size: size, weight: .medium, design: .rounded)
+    }
+
+    static func button(_ size: CGFloat = 15) -> Font {
+        .system(size: size, weight: .semibold, design: .rounded)
     }
 
     // MARK: - Spacing

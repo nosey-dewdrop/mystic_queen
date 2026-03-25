@@ -47,12 +47,12 @@ struct OnboardingView: View {
     private var nameStep: some View {
         VStack(spacing: MQTheme.paddingLarge) {
             Text("Kozmik yolculugun basliyor...")
-                .font(MQTheme.pixelTitle(10))
+                .font(MQTheme.pixelLogo(10))
                 .foregroundStyle(MQTheme.gold)
                 .multilineTextAlignment(.center)
 
             Text("Adin ne?")
-                .font(MQTheme.pixelBody(16))
+                .font(MQTheme.title())
                 .foregroundStyle(MQTheme.textPrimary)
 
             TextField("", text: $nameInput, prompt: Text("Adini yaz...").foregroundStyle(MQTheme.textMuted))
@@ -72,7 +72,7 @@ struct OnboardingView: View {
                 }
             } label: {
                 Text("Devam")
-                    .font(MQTheme.pixelBody(14))
+                    .font(MQTheme.button())
                     .foregroundStyle(MQTheme.backgroundDark)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
@@ -87,7 +87,7 @@ struct OnboardingView: View {
     private var birthDateStep: some View {
         VStack(spacing: MQTheme.paddingLarge) {
             Text("Dogum tarihin?")
-                .font(MQTheme.pixelBody(16))
+                .font(MQTheme.title())
                 .foregroundStyle(MQTheme.textPrimary)
 
             Text("Burcunu otomatik hesaplayalim")
@@ -112,7 +112,7 @@ struct OnboardingView: View {
                 Text(computedZodiac.emoji)
                     .font(.system(size: 28))
                 Text(computedZodiac.displayName)
-                    .font(MQTheme.pixelBody(14))
+                    .font(MQTheme.heading())
                     .foregroundStyle(MQTheme.gold)
             }
             .padding()
@@ -124,7 +124,6 @@ struct OnboardingView: View {
                 withAnimation(.easeInOut) {
                     step = .bonus
                 }
-                // Give bonus after short delay
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
                         coffeeBalance += 3
@@ -133,7 +132,7 @@ struct OnboardingView: View {
                 }
             } label: {
                 Text("Devam")
-                    .font(MQTheme.pixelBody(14))
+                    .font(MQTheme.button())
                     .foregroundStyle(MQTheme.backgroundDark)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
@@ -152,7 +151,7 @@ struct OnboardingView: View {
                 .opacity(showBonusAnimation ? 1 : 0)
 
             Text("3 kahve hediye!")
-                .font(MQTheme.pixelTitle(14))
+                .font(MQTheme.title())
                 .foregroundStyle(MQTheme.gold)
                 .opacity(showBonusAnimation ? 1 : 0)
 
@@ -167,7 +166,7 @@ struct OnboardingView: View {
                     hasCompletedOnboarding = true
                 } label: {
                     Text("Falcilari Gor")
-                        .font(MQTheme.pixelBody(14))
+                        .font(MQTheme.button())
                         .foregroundStyle(MQTheme.backgroundDark)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)

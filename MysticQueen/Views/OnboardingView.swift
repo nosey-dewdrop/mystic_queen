@@ -20,12 +20,31 @@ struct OnboardingView: View {
         case bonus
     }
 
+    private var stepIndex: Int {
+        switch step {
+        case .name: return 0
+        case .birthDate: return 1
+        case .bonus: return 2
+        }
+    }
+
     var body: some View {
         ZStack {
             MQTheme.backgroundDark.ignoresSafeArea()
             StarsBackgroundView()
 
             VStack(spacing: MQTheme.paddingLarge) {
+                // Step indicator
+                HStack(spacing: 8) {
+                    ForEach(0..<3) { i in
+                        Circle()
+                            .fill(stepIndex >= i ? MQTheme.gold : MQTheme.textMuted.opacity(0.3))
+                            .frame(width: 8, height: 8)
+                            .animation(.easeInOut, value: stepIndex)
+                    }
+                }
+                .padding(.top, 20)
+
                 Spacer()
 
                 switch step {

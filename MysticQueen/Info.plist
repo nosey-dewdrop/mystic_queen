@@ -23,9 +23,6 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>PressStart2P-Regular.ttf</string>
-		<string>Silkscreen-Regular.ttf</string>
-		<string>Silkscreen-Bold.ttf</string>
-		<string>PixelifySans[wght].ttf</string>
 	</array>
 	<key>UILaunchScreen</key>
 	<dict>

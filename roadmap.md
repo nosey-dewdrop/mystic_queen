@@ -7,12 +7,13 @@
 - [x] basic app structure (no tab bar, carousel-based navigation)
 
 ## Phase 2: Characters & Carousel
-- [ ] character data (6 characters with personalities, specialties, greetings)
-- [ ] carousel view (full screen, swipe between characters)
-- [ ] per-character ambiance (background color/mood shift on swipe)
-- [ ] character greeting text (changes per character)
-- [ ] character detail page (pixel art, bio, fortune types, two buttons)
-- [ ] pixel art character avatars via pixellab
+- [x] character data (6 characters with personalities, specialties, greetings)
+- [x] carousel view (full screen, swipe between characters)
+- [x] per-character ambiance (room backgrounds + gradient overlay)
+- [x] character greeting text (changes per character)
+- [x] character detail page (pixel art, bio, fortune types, two buttons)
+- [x] pixel art character avatars via pixellab
+- [x] pixel art room backgrounds via pixellab (6 unique rooms)
 
 ## Phase 3: Credit System
 - [ ] coffee credit model and manager

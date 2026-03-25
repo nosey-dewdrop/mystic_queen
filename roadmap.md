@@ -16,12 +16,13 @@
 - [x] pixel art room backgrounds via pixellab (6 unique rooms)
 
 ## Phase 3: Credit System
-- [ ] coffee credit model and manager
-- [ ] storekit 2 integration (4 credit packages)
-- [ ] first registration bonus (3 coffees)
-- [ ] refer a friend reward (1 coffee)
-- [ ] rewarded ads integration via admob (15 ads = 1 coffee)
-- [ ] credit badge always visible on screen
+- [x] coffee credit model and manager
+- [x] storekit 2 integration (4 credit packages)
+- [x] first registration bonus (3 coffees)
+- [x] refer a friend reward (1 coffee)
+- [x] rewarded ads tracking (15 ads = 1 coffee, admob integration pending)
+- [x] credit badge always visible on screen
+- [x] coffee shop view (packages, ads progress, referral, restore purchases)
 
 ## Phase 4: Fal Baktir (Quick Reading)
 - [ ] fortune type selection (character's specialties)

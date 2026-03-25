@@ -1,0 +1,44 @@
+name: MysticQueen
+options:
+  bundleIdPrefix: com.damla
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "16.0"
+  generateEmptyDirectories: false
+
+targets:
+  MysticQueen:
+    type: application
+    platform: iOS
+    sources:
+      - path: MysticQueen
+    resources:
+      - path: MysticQueen/Fonts
+        buildPhase: resources
+    info:
+      path: MysticQueen/Info.plist
+      properties:
+        UILaunchScreen:
+          UIColorName: LaunchBackground
+        CFBundleDisplayName: Mystic Queen
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UIAppFonts:
+          - PressStart2P-Regular.ttf
+          - Silkscreen-Regular.ttf
+          - Silkscreen-Bold.ttf
+          - PixelifySans[wght].ttf
+        UIUserInterfaceStyle: Dark
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.damla.mysticqueen
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: 1
+        SWIFT_VERSION: "5.9"
+        DEVELOPMENT_TEAM: ""
+        INFOPLIST_FILE: MysticQueen/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_UIUserInterfaceStyle: Dark

@@ -9,30 +9,23 @@ struct MainView: View {
 
     var body: some View {
         ZStack {
-            // Ambient background that changes with character
-            characters[selectedIndex].ambianceColor
-                .ignoresSafeArea()
-                .animation(.easeInOut(duration: 0.6), value: selectedIndex)
+            // Base dark background
+            Color.black.ignoresSafeArea()
 
-            // Subtle star particles
-            StarsBackgroundView()
-
-            VStack(spacing: 0) {
-                // Top bar
-                topBar
-
-                Spacer()
-
-                // Character carousel
-                TabView(selection: $selectedIndex) {
-                    ForEach(Array(characters.enumerated()), id: \.element.id) { index, character in
-                        CharacterCardView(character: character)
-                            .tag(index)
-                    }
+            // Character carousel — full screen, immersive
+            TabView(selection: $selectedIndex) {
+                ForEach(Array(characters.enumerated()), id: \.element.id) { index, character in
+                    CharacterCardView(character: character)
+                        .tag(index)
+                        .ignoresSafeArea()
                 }
-                .tabViewStyle(.page(indexDisplayMode: .always))
-                .frame(maxHeight: .infinity)
+            }
+            .tabViewStyle(.page(indexDisplayMode: .always))
+            .ignoresSafeArea()
 
+            // Top bar overlay — always on top
+            VStack {
+                topBar
                 Spacer()
             }
         }
@@ -43,24 +36,25 @@ struct MainView: View {
 
     private var topBar: some View {
         HStack {
-            // App logo/name
+            // App logo
             Text("Mystic Queen")
-                .font(MQTheme.pixelLogo(10))
+                .font(MQTheme.pixelLogo(9))
                 .foregroundStyle(MQTheme.gold)
+                .shadow(color: .black.opacity(0.8), radius: 4)
 
             Spacer()
 
             // Coffee balance
             HStack(spacing: 4) {
                 Text("☕")
-                    .font(.system(size: 16))
+                    .font(.system(size: 14))
                 Text("\(coffeeBalance)")
                     .font(MQTheme.button())
                     .foregroundStyle(MQTheme.coffee)
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
-            .background(MQTheme.backgroundCard.opacity(0.8))
+            .background(.ultraThinMaterial.opacity(0.6))
             .clipShape(Capsule())
 
             // Profile button
@@ -70,6 +64,7 @@ struct MainView: View {
                 Image(systemName: "person.circle.fill")
                     .font(.system(size: 24))
                     .foregroundStyle(MQTheme.gold)
+                    .shadow(color: .black.opacity(0.5), radius: 3)
             }
         }
         .padding(.horizontal, MQTheme.paddingMedium)

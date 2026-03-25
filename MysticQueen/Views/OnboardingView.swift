@@ -11,7 +11,7 @@ struct OnboardingView: View {
     @State private var birthDateInput: Date = Calendar.current.date(
         from: DateComponents(year: 2000, month: 1, day: 1)
     ) ?? Date()
-    @State private var computedZodiac: ZodiacSign = .aries
+    @State private var computedZodiac: ZodiacSign = .capricorn
     @State private var showBonusAnimation = false
 
     enum OnboardingStep {
@@ -46,16 +46,16 @@ struct OnboardingView: View {
     // MARK: - Name Step
     private var nameStep: some View {
         VStack(spacing: MQTheme.paddingLarge) {
-            Text("Kozmik yolculugun basliyor...")
+            Text("Kozmik yolculuğun başlıyor...")
                 .font(MQTheme.pixelLogo(10))
                 .foregroundStyle(MQTheme.gold)
                 .multilineTextAlignment(.center)
 
-            Text("Adin ne?")
+            Text("Adın ne?")
                 .font(MQTheme.title())
                 .foregroundStyle(MQTheme.textPrimary)
 
-            TextField("", text: $nameInput, prompt: Text("Adini yaz...").foregroundStyle(MQTheme.textMuted))
+            TextField("", text: $nameInput, prompt: Text("Adını yaz...").foregroundStyle(MQTheme.textMuted))
                 .font(MQTheme.body(18))
                 .foregroundStyle(MQTheme.textPrimary)
                 .multilineTextAlignment(.center)
@@ -86,11 +86,28 @@ struct OnboardingView: View {
     // MARK: - Birth Date Step
     private var birthDateStep: some View {
         VStack(spacing: MQTheme.paddingLarge) {
-            Text("Dogum tarihin?")
+            // Back button
+            HStack {
+                Button {
+                    withAnimation(.easeInOut) {
+                        step = .name
+                    }
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "chevron.left")
+                        Text("Geri")
+                    }
+                    .font(MQTheme.body())
+                    .foregroundStyle(MQTheme.textSecondary)
+                }
+                Spacer()
+            }
+
+            Text("Doğum tarihin?")
                 .font(MQTheme.title())
                 .foregroundStyle(MQTheme.textPrimary)
 
-            Text("Burcunu otomatik hesaplayalim")
+            Text("Burcunu otomatik hesaplayalım")
                 .font(MQTheme.body(14))
                 .foregroundStyle(MQTheme.textSecondary)
 
@@ -107,7 +124,6 @@ struct OnboardingView: View {
                 computedZodiac = UserProfile.zodiac(from: newValue)
             }
 
-            // Show computed zodiac
             HStack(spacing: 8) {
                 Text(computedZodiac.emoji)
                     .font(.system(size: 28))
@@ -155,7 +171,7 @@ struct OnboardingView: View {
                 .foregroundStyle(MQTheme.gold)
                 .opacity(showBonusAnimation ? 1 : 0)
 
-            Text("Ilk falini baktirmak icin hazirsin, \(userName)")
+            Text("İlk falını baktırmak için hazırsın, \(userName)")
                 .font(MQTheme.body(16))
                 .foregroundStyle(MQTheme.textPrimary)
                 .multilineTextAlignment(.center)
@@ -165,7 +181,7 @@ struct OnboardingView: View {
                 Button {
                     hasCompletedOnboarding = true
                 } label: {
-                    Text("Falcilari Gor")
+                    Text("Falcıları Gör")
                         .font(MQTheme.button())
                         .foregroundStyle(MQTheme.backgroundDark)
                         .frame(maxWidth: .infinity)

@@ -1,0 +1,186 @@
+import SwiftUI
+
+struct OnboardingView: View {
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    @AppStorage("coffeeBalance") private var coffeeBalance: Int = 0
+    @AppStorage("userName") private var userName: String = ""
+    @AppStorage("userBirthDate") private var userBirthDate: Double = Date().timeIntervalSince1970
+
+    @State private var step: OnboardingStep = .name
+    @State private var nameInput: String = ""
+    @State private var birthDateInput: Date = Calendar.current.date(
+        from: DateComponents(year: 2000, month: 1, day: 1)
+    ) ?? Date()
+    @State private var computedZodiac: ZodiacSign = .aries
+    @State private var showBonusAnimation = false
+
+    enum OnboardingStep {
+        case name
+        case birthDate
+        case bonus
+    }
+
+    var body: some View {
+        ZStack {
+            MQTheme.backgroundDark.ignoresSafeArea()
+            StarsBackgroundView()
+
+            VStack(spacing: MQTheme.paddingLarge) {
+                Spacer()
+
+                switch step {
+                case .name:
+                    nameStep
+                case .birthDate:
+                    birthDateStep
+                case .bonus:
+                    bonusStep
+                }
+
+                Spacer()
+            }
+            .padding(.horizontal, MQTheme.paddingLarge)
+        }
+    }
+
+    // MARK: - Name Step
+    private var nameStep: some View {
+        VStack(spacing: MQTheme.paddingLarge) {
+            Text("Kozmik yolculugun basliyor...")
+                .font(MQTheme.pixelTitle(10))
+                .foregroundStyle(MQTheme.gold)
+                .multilineTextAlignment(.center)
+
+            Text("Adin ne?")
+                .font(MQTheme.pixelBody(16))
+                .foregroundStyle(MQTheme.textPrimary)
+
+            TextField("", text: $nameInput, prompt: Text("Adini yaz...").foregroundStyle(MQTheme.textMuted))
+                .font(MQTheme.body(18))
+                .foregroundStyle(MQTheme.textPrimary)
+                .multilineTextAlignment(.center)
+                .padding()
+                .background(MQTheme.backgroundCard)
+                .clipShape(RoundedRectangle(cornerRadius: MQTheme.cornerRadius))
+                .autocorrectionDisabled()
+
+            Button {
+                guard !nameInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+                userName = nameInput.trimmingCharacters(in: .whitespacesAndNewlines)
+                withAnimation(.easeInOut) {
+                    step = .birthDate
+                }
+            } label: {
+                Text("Devam")
+                    .font(MQTheme.pixelBody(14))
+                    .foregroundStyle(MQTheme.backgroundDark)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+                    .background(nameInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? MQTheme.goldDim : MQTheme.gold)
+                    .clipShape(RoundedRectangle(cornerRadius: MQTheme.cornerRadius))
+            }
+            .disabled(nameInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+        }
+    }
+
+    // MARK: - Birth Date Step
+    private var birthDateStep: some View {
+        VStack(spacing: MQTheme.paddingLarge) {
+            Text("Dogum tarihin?")
+                .font(MQTheme.pixelBody(16))
+                .foregroundStyle(MQTheme.textPrimary)
+
+            Text("Burcunu otomatik hesaplayalim")
+                .font(MQTheme.body(14))
+                .foregroundStyle(MQTheme.textSecondary)
+
+            DatePicker(
+                "",
+                selection: $birthDateInput,
+                in: ...Date(),
+                displayedComponents: .date
+            )
+            .datePickerStyle(.wheel)
+            .labelsHidden()
+            .colorScheme(.dark)
+            .onChange(of: birthDateInput) { _, newValue in
+                computedZodiac = UserProfile.zodiac(from: newValue)
+            }
+
+            // Show computed zodiac
+            HStack(spacing: 8) {
+                Text(computedZodiac.emoji)
+                    .font(.system(size: 28))
+                Text(computedZodiac.displayName)
+                    .font(MQTheme.pixelBody(14))
+                    .foregroundStyle(MQTheme.gold)
+            }
+            .padding()
+            .background(MQTheme.backgroundCard)
+            .clipShape(RoundedRectangle(cornerRadius: MQTheme.cornerRadius))
+
+            Button {
+                userBirthDate = birthDateInput.timeIntervalSince1970
+                withAnimation(.easeInOut) {
+                    step = .bonus
+                }
+                // Give bonus after short delay
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
+                        coffeeBalance += 3
+                        showBonusAnimation = true
+                    }
+                }
+            } label: {
+                Text("Devam")
+                    .font(MQTheme.pixelBody(14))
+                    .foregroundStyle(MQTheme.backgroundDark)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+                    .background(MQTheme.gold)
+                    .clipShape(RoundedRectangle(cornerRadius: MQTheme.cornerRadius))
+            }
+        }
+    }
+
+    // MARK: - Bonus Step
+    private var bonusStep: some View {
+        VStack(spacing: MQTheme.paddingLarge) {
+            Text("☕☕☕")
+                .font(.system(size: 48))
+                .scaleEffect(showBonusAnimation ? 1.2 : 0.5)
+                .opacity(showBonusAnimation ? 1 : 0)
+
+            Text("3 kahve hediye!")
+                .font(MQTheme.pixelTitle(14))
+                .foregroundStyle(MQTheme.gold)
+                .opacity(showBonusAnimation ? 1 : 0)
+
+            Text("Ilk falini baktirmak icin hazirsin, \(userName)")
+                .font(MQTheme.body(16))
+                .foregroundStyle(MQTheme.textPrimary)
+                .multilineTextAlignment(.center)
+                .opacity(showBonusAnimation ? 1 : 0)
+
+            if showBonusAnimation {
+                Button {
+                    hasCompletedOnboarding = true
+                } label: {
+                    Text("Falcilari Gor")
+                        .font(MQTheme.pixelBody(14))
+                        .foregroundStyle(MQTheme.backgroundDark)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .background(MQTheme.gold)
+                        .clipShape(RoundedRectangle(cornerRadius: MQTheme.cornerRadius))
+                }
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+        }
+    }
+}
+
+#Preview {
+    OnboardingView()
+        .preferredColorScheme(.dark)
+}

@@ -33,10 +33,11 @@ struct CharacterCardView: View {
                         }
                     )
 
-                VStack(spacing: 0) {
-                    Spacer()
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: 0) {
+                        Spacer(minLength: geo.size.height * 0.15)
 
-                    Image(character.avatarName)
+                        Image(character.avatarName)
                         .resizable()
                         .interpolation(.none)
                         .scaledToFit()
@@ -119,7 +120,9 @@ struct CharacterCardView: View {
                     }
                     .padding(.horizontal, MQTheme.paddingLarge)
                     .padding(.bottom, MQTheme.paddingLarge + 20)
+                    }
                 }
+                .scrollBounceBehavior(.basedOnSize)
             }
         }
         .onAppear {

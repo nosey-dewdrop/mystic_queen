@@ -25,7 +25,6 @@ struct ProfileView: View {
                         profileHeader
                         coffeeCard
                         pastReadingsSection
-                        settingsSection
                     }
                     .padding(MQTheme.paddingMedium)
                 }
@@ -102,7 +101,7 @@ struct ProfileView: View {
             Button {
                 showCoffeeShop = true
             } label: {
-                Text("Kahve Satin Al")
+                Text("Kahve Satın Al")
                     .font(MQTheme.button())
                     .foregroundStyle(MQTheme.backgroundDark)
                     .frame(maxWidth: .infinity)
@@ -118,53 +117,26 @@ struct ProfileView: View {
 
     private var pastReadingsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Gecmis Fallar")
+            Text("Geçmiş Fallar")
                 .font(MQTheme.heading())
                 .foregroundStyle(MQTheme.textSecondary)
 
-            Text("Henuz fal baktirmadiniz")
-                .font(MQTheme.body())
-                .foregroundStyle(MQTheme.textMuted)
-                .frame(maxWidth: .infinity, minHeight: 60)
+            VStack(spacing: 8) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: 32))
+                    .foregroundStyle(MQTheme.textMuted)
+                Text("Henüz fal baktırmadınız")
+                    .font(MQTheme.body())
+                    .foregroundStyle(MQTheme.textMuted)
+                Text("İlk falınızı baktırmak için bir falcı seçin")
+                    .font(MQTheme.caption())
+                    .foregroundStyle(MQTheme.textMuted.opacity(0.7))
+            }
+            .frame(maxWidth: .infinity, minHeight: 80)
         }
         .padding(MQTheme.paddingMedium)
         .background(MQTheme.backgroundCard)
         .clipShape(RoundedRectangle(cornerRadius: MQTheme.cornerRadius))
-    }
-
-    private var settingsSection: some View {
-        VStack(spacing: 1) {
-            settingsRow(icon: "person.fill", title: "Profil Duzenle")
-            settingsRow(icon: "bell.fill", title: "Bildirimler")
-            settingsRow(icon: "lock.shield.fill", title: "Gizlilik Politikasi")
-            settingsRow(icon: "doc.text.fill", title: "Kullanim Kosullari")
-        }
-        .clipShape(RoundedRectangle(cornerRadius: MQTheme.cornerRadius))
-    }
-
-    private func settingsRow(icon: String, title: String) -> some View {
-        Button {
-            // TODO: Navigation
-        } label: {
-            HStack(spacing: 12) {
-                Image(systemName: icon)
-                    .font(.system(size: 16))
-                    .foregroundStyle(MQTheme.gold)
-                    .frame(width: 24)
-
-                Text(title)
-                    .font(MQTheme.body())
-                    .foregroundStyle(MQTheme.textPrimary)
-
-                Spacer()
-
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 12))
-                    .foregroundStyle(MQTheme.textMuted)
-            }
-            .padding(MQTheme.paddingMedium)
-            .background(MQTheme.backgroundCard)
-        }
     }
 }
 

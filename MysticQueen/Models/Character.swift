@@ -9,7 +9,8 @@ struct FortuneTeller: Identifiable {
     let specialties: [FortuneType]
     let ambianceColor: Color
     let accentColor: Color
-    let avatarName: String // asset catalog name
+    let avatarName: String
+    let roomName: String
 
     static let all: [FortuneTeller] = [
         FortuneTeller(
@@ -21,7 +22,8 @@ struct FortuneTeller: Identifiable {
             specialties: [.tarot, .lenormand],
             ambianceColor: MQTheme.seleneAmbiance,
             accentColor: Color(hex: 0xE8A0BF),
-            avatarName: "selene_avatar"
+            avatarName: "selene_avatar",
+            roomName: "selene_room"
         ),
         FortuneTeller(
             id: "ruhi_dede",
@@ -32,7 +34,8 @@ struct FortuneTeller: Identifiable {
             specialties: [.coffeeReading, .katina],
             ambianceColor: MQTheme.ruhiDedeAmbiance,
             accentColor: Color(hex: 0xD4A574),
-            avatarName: "ruhi_dede_avatar"
+            avatarName: "ruhi_dede_avatar",
+            roomName: "ruhi_dede_room"
         ),
         FortuneTeller(
             id: "lilith",
@@ -43,7 +46,8 @@ struct FortuneTeller: Identifiable {
             specialties: [.tarot, .playingCards],
             ambianceColor: MQTheme.lilithAmbiance,
             accentColor: Color(hex: 0x9B6DFF),
-            avatarName: "lilith_avatar"
+            avatarName: "lilith_avatar",
+            roomName: "lilith_room"
         ),
         FortuneTeller(
             id: "nazim",
@@ -54,7 +58,8 @@ struct FortuneTeller: Identifiable {
             specialties: [.lenormand, .angelCards],
             ambianceColor: MQTheme.nazimAmbiance,
             accentColor: Color(hex: 0x7EC8B8),
-            avatarName: "nazim_avatar"
+            avatarName: "nazim_avatar",
+            roomName: "nazim_room"
         ),
         FortuneTeller(
             id: "zumrut_ana",
@@ -65,7 +70,8 @@ struct FortuneTeller: Identifiable {
             specialties: [.coffeeReading, .angelCards],
             ambianceColor: MQTheme.zumrutAnaAmbiance,
             accentColor: Color(hex: 0xE8C170),
-            avatarName: "zumrut_ana_avatar"
+            avatarName: "zumrut_ana_avatar",
+            roomName: "zumrut_ana_room"
         ),
         FortuneTeller(
             id: "cassian",
@@ -76,7 +82,8 @@ struct FortuneTeller: Identifiable {
             specialties: [.playingCards, .katina],
             ambianceColor: MQTheme.cassianAmbiance,
             accentColor: Color(hex: 0x64B5F6),
-            avatarName: "cassian_avatar"
+            avatarName: "cassian_avatar",
+            roomName: "cassian_room"
         )
     ]
 }

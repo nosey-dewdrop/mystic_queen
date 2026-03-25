@@ -2,7 +2,7 @@ import SwiftUI
 
 struct OnboardingView: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
-    @AppStorage("coffeeBalance") private var coffeeBalance: Int = 0
+    @ObservedObject private var creditManager = CreditManager.shared
     @AppStorage("userName") private var userName: String = ""
     @AppStorage("userBirthDate") private var userBirthDate: Double = Date().timeIntervalSince1970
 
@@ -126,7 +126,7 @@ struct OnboardingView: View {
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
-                        coffeeBalance += 3
+                        creditManager.giveWelcomeBonusIfNeeded()
                         showBonusAnimation = true
                     }
                 }

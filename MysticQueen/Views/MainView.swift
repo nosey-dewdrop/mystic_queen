@@ -3,7 +3,7 @@ import SwiftUI
 struct MainView: View {
     @State private var selectedIndex: Int = 0
     @State private var showProfile = false
-    @AppStorage("coffeeBalance") private var coffeeBalance: Int = 0
+    @ObservedObject private var creditManager = CreditManager.shared
 
     private let characters = FortuneTeller.all
 
@@ -48,7 +48,7 @@ struct MainView: View {
             HStack(spacing: 4) {
                 Text("☕")
                     .font(.system(size: 14))
-                Text("\(coffeeBalance)")
+                Text("\(creditManager.coffeeBalance)")
                     .font(MQTheme.button())
                     .foregroundStyle(MQTheme.coffee)
             }

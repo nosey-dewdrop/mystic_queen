@@ -4,7 +4,8 @@ struct ProfileView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("userName") private var userName: String = ""
     @AppStorage("userBirthDate") private var userBirthDate: Double = Date().timeIntervalSince1970
-    @AppStorage("coffeeBalance") private var coffeeBalance: Int = 0
+    @ObservedObject private var creditManager = CreditManager.shared
+    @State private var showCoffeeShop = false
 
     private var birthDate: Date {
         Date(timeIntervalSince1970: userBirthDate)
@@ -47,6 +48,9 @@ struct ProfileView: View {
                 }
             }
             .toolbarBackground(.hidden, for: .navigationBar)
+            .sheet(isPresented: $showCoffeeShop) {
+                CoffeeShopView()
+            }
         }
     }
 
@@ -87,7 +91,7 @@ struct ProfileView: View {
 
                 Spacer()
 
-                Text("\(coffeeBalance)")
+                Text("\(creditManager.coffeeBalance)")
                     .font(MQTheme.title(28))
                     .foregroundStyle(MQTheme.coffee)
             }
@@ -96,7 +100,7 @@ struct ProfileView: View {
                 .overlay(MQTheme.textMuted.opacity(0.3))
 
             Button {
-                // TODO: Open coffee shop
+                showCoffeeShop = true
             } label: {
                 Text("Kahve Satin Al")
                     .font(MQTheme.button())

@@ -86,7 +86,9 @@ struct CoffeeShopView: View {
 
             if creditManager.products.isEmpty {
                 ForEach(CreditManager.fallbackPackages) { pkg in
-                    packageRow(coffees: pkg.coffees, price: pkg.price, action: {})
+                    packageRow(coffees: pkg.coffees, price: pkg.price, action: {
+                        creditManager.purchaseError = "Mağazaya bağlanılamadı. İnternet bağlantını kontrol edip tekrar dene."
+                    })
                 }
             } else {
                 ForEach(creditManager.products) { product in

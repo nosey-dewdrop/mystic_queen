@@ -3,16 +3,15 @@ import SwiftUI
 struct MainView: View {
     @State private var selectedIndex: Int = 0
     @State private var showProfile = false
+    @State private var showCoffeeShop = false
     @ObservedObject private var creditManager = CreditManager.shared
 
     private let characters = FortuneTeller.all
 
     var body: some View {
         ZStack {
-            // Base dark background
             Color.black.ignoresSafeArea()
 
-            // Character carousel — full screen, immersive
             TabView(selection: $selectedIndex) {
                 ForEach(Array(characters.enumerated()), id: \.element.id) { index, character in
                     CharacterCardView(character: character)
@@ -23,7 +22,6 @@ struct MainView: View {
             .tabViewStyle(.page(indexDisplayMode: .always))
             .ignoresSafeArea()
 
-            // Top bar overlay — always on top
             VStack {
                 topBar
                 Spacer()
@@ -32,11 +30,13 @@ struct MainView: View {
         .sheet(isPresented: $showProfile) {
             ProfileView()
         }
+        .sheet(isPresented: $showCoffeeShop) {
+            CoffeeShopView()
+        }
     }
 
     private var topBar: some View {
         HStack {
-            // App logo
             Text("Mystic Queen")
                 .font(MQTheme.pixelLogo(9))
                 .foregroundStyle(MQTheme.gold)
@@ -44,20 +44,23 @@ struct MainView: View {
 
             Spacer()
 
-            // Coffee balance
-            HStack(spacing: 4) {
-                Text("☕")
-                    .font(.system(size: 14))
-                Text("\(creditManager.coffeeBalance)")
-                    .font(MQTheme.button())
-                    .foregroundStyle(MQTheme.coffee)
+            // Coffee balance — tappable, opens coffee shop
+            Button {
+                showCoffeeShop = true
+            } label: {
+                HStack(spacing: 4) {
+                    Text("☕")
+                        .font(.system(size: 14))
+                    Text("\(creditManager.coffeeBalance)")
+                        .font(MQTheme.button())
+                        .foregroundStyle(MQTheme.coffee)
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(.ultraThinMaterial.opacity(0.6))
+                .clipShape(Capsule())
             }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 6)
-            .background(.ultraThinMaterial.opacity(0.6))
-            .clipShape(Capsule())
 
-            // Profile button
             Button {
                 showProfile = true
             } label: {

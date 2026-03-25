@@ -43,6 +43,7 @@ struct CharacterCardView: View {
                         .scaledToFit()
                         .frame(width: 160, height: 160)
                         .shadow(color: character.accentColor.opacity(glowPulse ? 0.5 : 0.2), radius: glowPulse ? 25 : 15)
+                        .drawingGroup()
 
                     Spacer()
                         .frame(height: 16)

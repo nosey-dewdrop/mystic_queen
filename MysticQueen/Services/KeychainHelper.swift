@@ -18,13 +18,7 @@ enum KeychainHelper {
         var addQuery = query
         addQuery[kSecValueData as String] = data
         let status = SecItemAdd(addQuery as CFDictionary, nil)
-        if status != errSecSuccess {
-            #if DEBUG
-            print("[KeychainHelper] SecItemAdd failed with status: \(status) for key: \(key)")
-            #endif
-            return false
-        }
-        return true
+        return status == errSecSuccess
     }
 
     static func load(forKey key: String) -> Int? {

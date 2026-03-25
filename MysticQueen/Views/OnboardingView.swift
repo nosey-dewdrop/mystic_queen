@@ -63,8 +63,13 @@ struct OnboardingView: View {
     }
 
     // MARK: - Name Step
+    private var trimmedName: String {
+        nameInput.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
     private var nameStep: some View {
-        VStack(spacing: MQTheme.paddingLarge) {
+        let isNameEmpty = trimmedName.isEmpty
+        return VStack(spacing: MQTheme.paddingLarge) {
             Text("Kozmik yolculuğun başlıyor...")
                 .font(MQTheme.pixelLogo(10))
                 .foregroundStyle(MQTheme.gold)
@@ -84,8 +89,8 @@ struct OnboardingView: View {
                 .autocorrectionDisabled()
 
             Button {
-                guard !nameInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
-                userName = nameInput.trimmingCharacters(in: .whitespacesAndNewlines)
+                guard !isNameEmpty else { return }
+                userName = trimmedName
                 withAnimation(.easeInOut) {
                     step = .birthDate
                 }
@@ -95,10 +100,10 @@ struct OnboardingView: View {
                     .foregroundStyle(MQTheme.backgroundDark)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
-                    .background(nameInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? MQTheme.goldDim : MQTheme.gold)
+                    .background(isNameEmpty ? MQTheme.goldDim : MQTheme.gold)
                     .clipShape(RoundedRectangle(cornerRadius: MQTheme.cornerRadius))
             }
-            .disabled(nameInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            .disabled(isNameEmpty)
         }
     }
 

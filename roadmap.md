@@ -1,10 +1,10 @@
 # Roadmap
 
 ## Phase 1: Foundation
-- [ ] xcode project setup (swiftui, xcodegen, bundle id, fonts)
-- [ ] data models (character, fortune type, reading, user profile, slot, appointment)
-- [ ] color palette and pixel art style constants
-- [ ] basic app structure (no tab bar, carousel-based navigation)
+- [x] xcode project setup (swiftui, xcodegen, bundle id, fonts)
+- [x] data models (character, fortune type, reading, user profile, slot, appointment)
+- [x] color palette and pixel art style constants
+- [x] basic app structure (no tab bar, carousel-based navigation)
 
 ## Phase 2: Characters & Carousel
 - [ ] character data (6 characters with personalities, specialties, greetings)

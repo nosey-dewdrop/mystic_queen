@@ -34,18 +34,18 @@ enum ZodiacSign: String, Codable, CaseIterable {
 
     var displayName: String {
         switch self {
-        case .aries: return "Koc"
-        case .taurus: return "Boga"
-        case .gemini: return "Ikizler"
-        case .cancer: return "Yengec"
+        case .aries: return "Koç"
+        case .taurus: return "Boğa"
+        case .gemini: return "İkizler"
+        case .cancer: return "Yengeç"
         case .leo: return "Aslan"
-        case .virgo: return "Basak"
+        case .virgo: return "Başak"
         case .libra: return "Terazi"
         case .scorpio: return "Akrep"
         case .sagittarius: return "Yay"
-        case .capricorn: return "Oglak"
+        case .capricorn: return "Oğlak"
         case .aquarius: return "Kova"
-        case .pisces: return "Balik"
+        case .pisces: return "Balık"
         }
     }
 

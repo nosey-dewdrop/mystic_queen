@@ -3,10 +3,10 @@ import Foundation
 enum FortuneType: String, Codable, CaseIterable, Identifiable {
     case tarot
     case katina
-    case angelCards    // melek fali
-    case playingCards  // iskambil fali
+    case angelCards
+    case playingCards
     case lenormand
-    case coffeeReading // kahve fali
+    case coffeeReading
 
     var id: String { rawValue }
 
@@ -14,10 +14,10 @@ enum FortuneType: String, Codable, CaseIterable, Identifiable {
         switch self {
         case .tarot: return "Tarot"
         case .katina: return "Katina"
-        case .angelCards: return "Melek Fali"
-        case .playingCards: return "Iskambil Fali"
+        case .angelCards: return "Melek Falı"
+        case .playingCards: return "İskambil Falı"
         case .lenormand: return "Lenormand"
-        case .coffeeReading: return "Kahve Fali"
+        case .coffeeReading: return "Kahve Falı"
         }
     }
 
@@ -34,12 +34,12 @@ enum FortuneType: String, Codable, CaseIterable, Identifiable {
 
     var description: String {
         switch self {
-        case .tarot: return "78 kartla hayatinin haritasini cikarir"
-        case .katina: return "Eski cagan gizemli kartlari"
+        case .tarot: return "78 kartla hayatının haritasını çıkarır"
+        case .katina: return "Eski çağın gizemli kartları"
         case .angelCards: return "Meleklerden gelen mesajlar"
         case .playingCards: return "Klasik iskambil ile kader okuma"
-        case .lenormand: return "36 kartla detayli hayat analizi"
-        case .coffeeReading: return "Fincanindaki gizli semboller"
+        case .lenormand: return "36 kartla detaylı hayat analizi"
+        case .coffeeReading: return "Fincanındaki gizli semboller"
         }
     }
 }

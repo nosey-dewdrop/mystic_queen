@@ -2,13 +2,11 @@ import SwiftUI
 
 struct CharacterCardView: View {
     let character: FortuneTeller
-    @State private var showDetail = false
     @State private var glowPulse = false
 
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                // Room background — fills the entire card
                 Image(character.roomName)
                     .resizable()
                     .interpolation(.none)
@@ -16,7 +14,6 @@ struct CharacterCardView: View {
                     .frame(width: geo.size.width, height: geo.size.height)
                     .clipped()
                     .overlay(
-                        // Gradient overlay for readability on top/bottom
                         VStack(spacing: 0) {
                             LinearGradient(
                                 colors: [character.ambianceColor, .clear],
@@ -36,11 +33,9 @@ struct CharacterCardView: View {
                         }
                     )
 
-                // Content layered on top
                 VStack(spacing: 0) {
                     Spacer()
 
-                    // Character avatar with glow
                     Image(character.avatarName)
                         .resizable()
                         .interpolation(.none)
@@ -51,7 +46,6 @@ struct CharacterCardView: View {
                     Spacer()
                         .frame(height: 16)
 
-                    // Character info
                     VStack(spacing: 8) {
                         Text(character.name)
                             .font(MQTheme.title(24))
@@ -69,7 +63,6 @@ struct CharacterCardView: View {
                             .italic()
                             .padding(.top, 4)
 
-                        // Specialty icons
                         HStack(spacing: 16) {
                             ForEach(character.specialties) { specialty in
                                 HStack(spacing: 4) {
@@ -88,41 +81,41 @@ struct CharacterCardView: View {
                     Spacer()
                         .frame(height: 24)
 
-                    // Action buttons
+                    // Fal Baktır button — disabled until Phase 4 is built
                     VStack(spacing: 10) {
-                        Button {
-                            showDetail = true
-                        } label: {
+                        Button {} label: {
                             HStack(spacing: 6) {
                                 Text("☕")
-                                Text("Fal Baktir")
+                                Text("Fal Baktır")
                                     .font(MQTheme.button())
                             }
                             .foregroundStyle(MQTheme.backgroundDark)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 14)
-                            .background(MQTheme.gold)
+                            .background(MQTheme.goldDim)
                             .clipShape(RoundedRectangle(cornerRadius: MQTheme.cornerRadius))
                         }
+                        .disabled(true)
+                        .opacity(0.5)
 
-                        Button {
-                            // TODO: Navigate to appointment booking
-                        } label: {
+                        Button {} label: {
                             HStack(spacing: 6) {
                                 Image(systemName: "calendar.badge.clock")
                                 Text("Randevu Al")
                                     .font(MQTheme.button())
                             }
-                            .foregroundStyle(character.accentColor)
+                            .foregroundStyle(character.accentColor.opacity(0.4))
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 14)
-                            .background(character.accentColor.opacity(0.15))
+                            .background(character.accentColor.opacity(0.08))
                             .clipShape(RoundedRectangle(cornerRadius: MQTheme.cornerRadius))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: MQTheme.cornerRadius)
-                                    .stroke(character.accentColor.opacity(0.3), lineWidth: 1)
-                            )
                         }
+                        .disabled(true)
+                        .opacity(0.5)
+
+                        Text("Çok yakında")
+                            .font(MQTheme.caption(11))
+                            .foregroundStyle(MQTheme.textMuted)
                     }
                     .padding(.horizontal, MQTheme.paddingLarge)
                     .padding(.bottom, MQTheme.paddingLarge + 20)

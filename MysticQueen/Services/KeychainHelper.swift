@@ -2,7 +2,8 @@ import Foundation
 import Security
 
 enum KeychainHelper {
-    static func save(_ value: Int, forKey key: String) {
+    @discardableResult
+    static func save(_ value: Int, forKey key: String) -> Bool {
         let data = withUnsafeBytes(of: value) { Data($0) }
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -16,7 +17,14 @@ enum KeychainHelper {
         // Add new
         var addQuery = query
         addQuery[kSecValueData as String] = data
-        SecItemAdd(addQuery as CFDictionary, nil)
+        let status = SecItemAdd(addQuery as CFDictionary, nil)
+        if status != errSecSuccess {
+            #if DEBUG
+            print("[KeychainHelper] SecItemAdd failed with status: \(status) for key: \(key)")
+            #endif
+            return false
+        }
+        return true
     }
 
     static func load(forKey key: String) -> Int? {

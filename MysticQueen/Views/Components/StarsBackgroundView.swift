@@ -1,27 +1,32 @@
 import SwiftUI
 
+struct StarData {
+    let relativeX: CGFloat  // 0...1 normalized
+    let relativeY: CGFloat  // 0...1 normalized
+    let size: CGFloat
+    let baseOpacity: Double
+}
+
 struct StarsBackgroundView: View {
     @State private var twinklePhase = false
+    @State private var stars: [StarData] = []
+
+    private static let starCount = 80
 
     var body: some View {
         Canvas { context, size in
-            // Deterministic star positions
-            var rng = SeededRandomNumberGenerator(seed: 42)
-
-            for _ in 0..<80 {
-                let x = CGFloat.random(in: 0...size.width, using: &rng)
-                let y = CGFloat.random(in: 0...size.height, using: &rng)
-                let starSize = CGFloat.random(in: 1...3, using: &rng)
-                let opacity = Double.random(in: 0.2...0.7, using: &rng)
+            for star in stars {
+                let x = star.relativeX * size.width
+                let y = star.relativeY * size.height
 
                 let rect = CGRect(
-                    x: x - starSize / 2,
-                    y: y - starSize / 2,
-                    width: starSize,
-                    height: starSize
+                    x: x - star.size / 2,
+                    y: y - star.size / 2,
+                    width: star.size,
+                    height: star.size
                 )
 
-                context.opacity = twinklePhase ? opacity : opacity * 0.5
+                context.opacity = twinklePhase ? star.baseOpacity : star.baseOpacity * 0.5
                 context.fill(
                     Path(ellipseIn: rect),
                     with: .color(MQTheme.goldLight)
@@ -31,6 +36,17 @@ struct StarsBackgroundView: View {
         .ignoresSafeArea()
         .allowsHitTesting(false)
         .onAppear {
+            if stars.isEmpty {
+                var rng = SeededRandomNumberGenerator(seed: 42)
+                stars = (0..<Self.starCount).map { _ in
+                    StarData(
+                        relativeX: CGFloat.random(in: 0...1, using: &rng),
+                        relativeY: CGFloat.random(in: 0...1, using: &rng),
+                        size: CGFloat.random(in: 1...3, using: &rng),
+                        baseOpacity: Double.random(in: 0.2...0.7, using: &rng)
+                    )
+                }
+            }
             withAnimation(.easeInOut(duration: 3).repeatForever(autoreverses: true)) {
                 twinklePhase = true
             }

@@ -159,9 +159,10 @@ struct OnboardingView: View {
                 withAnimation(.easeInOut) {
                     step = .bonus
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                Task {
+                    try? await Task.sleep(nanoseconds: 500_000_000)
+                    creditManager.giveWelcomeBonusIfNeeded()
                     withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
-                        creditManager.giveWelcomeBonusIfNeeded()
                         showBonusAnimation = true
                     }
                 }

@@ -83,8 +83,9 @@ class CreditManager: ObservableObject {
     private func listenForTransactions() {
         transactionTask = Task.detached { [weak self] in
             for await result in Transaction.updates {
-                if let transaction = try? await self?.checkVerified(result) {
-                    await self?.addCreditsForProduct(transaction.productID)
+                if let transaction = try? await self?.checkVerified(result),
+                   let strongSelf = self {
+                    await strongSelf.addCreditsForProduct(transaction.productID)
                     await transaction.finish()
                 }
             }

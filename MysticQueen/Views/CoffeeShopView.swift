@@ -4,6 +4,9 @@ import StoreKit
 struct CoffeeShopView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject private var creditManager = CreditManager.shared
+    @State private var isRestoring = false
+    @State private var showRestoreResult = false
+    @State private var restoreMessage = ""
 
     var body: some View {
         NavigationStack {
@@ -16,12 +19,28 @@ struct CoffeeShopView: View {
                         packagesSection
 
                         Button {
-                            Task { await creditManager.restorePurchases() }
+                            Task {
+                                isRestoring = true
+                                let balanceBefore = creditManager.coffeeBalance
+                                await creditManager.restorePurchases()
+                                isRestoring = false
+                                let restored = creditManager.coffeeBalance - balanceBefore
+                                restoreMessage = restored > 0
+                                    ? "\(restored) kahve geri yüklendi!"
+                                    : "Geri yüklenecek satın alma bulunamadı."
+                                showRestoreResult = true
+                            }
                         } label: {
-                            Text("Satın Almaları Geri Yükle")
-                                .font(MQTheme.caption())
-                                .foregroundStyle(MQTheme.textMuted)
+                            if isRestoring {
+                                ProgressView()
+                                    .tint(MQTheme.textMuted)
+                            } else {
+                                Text("Satın Almaları Geri Yükle")
+                                    .font(MQTheme.caption())
+                                    .foregroundStyle(MQTheme.textMuted)
+                            }
                         }
+                        .disabled(isRestoring)
                         .padding(.top, 8)
                     }
                     .padding(MQTheme.paddingMedium)
@@ -55,6 +74,11 @@ struct CoffeeShopView: View {
                 Button("Tamam", role: .cancel) {}
             } message: {
                 Text(creditManager.purchaseError ?? "")
+            }
+            .alert("Geri Yükleme", isPresented: $showRestoreResult) {
+                Button("Tamam", role: .cancel) {}
+            } message: {
+                Text(restoreMessage)
             }
         }
     }

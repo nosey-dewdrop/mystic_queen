@@ -139,13 +139,13 @@ class CreditManager: ObservableObject {
                 break
 
             case .pending:
-                purchaseError = "Satin alma beklemede. Apple ID odeme ayarlarini kontrol et."
+                purchaseError = "Satın alma beklemede. Apple ID ödeme ayarlarını kontrol et."
 
             @unknown default:
                 break
             }
         } catch {
-            purchaseError = "Satin alma basarisiz. Tekrar dene."
+            purchaseError = "Satın alma başarısız. Tekrar dene."
         }
     }
 
@@ -216,6 +216,6 @@ enum StoreError: LocalizedError {
     case verificationFailed
 
     var errorDescription: String? {
-        "Satin alma dogrulamasi basarisiz"
+        "Satın alma doğrulaması başarısız"
     }
 }

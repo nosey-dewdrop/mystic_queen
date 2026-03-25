@@ -24,8 +24,10 @@ struct MainView: View {
 
             VStack {
                 topBar
+                    .padding(.top, 4)
                 Spacer()
             }
+            .safeAreaPadding(.top)
         }
         .sheet(isPresented: $showProfile) {
             ProfileView()
@@ -71,7 +73,6 @@ struct MainView: View {
             }
         }
         .padding(.horizontal, MQTheme.paddingMedium)
-        .padding(.top, 8)
     }
 }
 

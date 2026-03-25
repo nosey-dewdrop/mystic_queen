@@ -34,7 +34,7 @@ struct TimeSlot: Identifiable, Hashable {
 
                 // Deterministic fake occupancy: ~25-35% of slots appear taken
                 let slotSeed = seedValue &* (hour * 60 + minute + 1)
-                let isFakeOccupied = abs(slotSeed) % 100 < 30
+                let isFakeOccupied = (slotSeed & 0x7FFFFFFF) % 100 < 30
 
                 slots.append(TimeSlot(
                     hour: hour,
